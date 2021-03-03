@@ -23,11 +23,11 @@ type Loc = {en: string; ar: string};
 const STRINGS: {[key: string]: Loc} = {
   promoMessage: {
     en: 'or 4 interest-free payments of',
-    ar: '',
+    ar: 'ةيرهش طاسقأ ٣ ىلع يقابلا طسّقو ،مويلا غلبملا عبر عفدا',
   },
   learnMore: {
     en: 'Learn more',
-    ar: '',
+    ar: 'ةيواستم',
   },
 };
 
@@ -59,13 +59,17 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   underline: {textDecorationLine: 'underline'},
   text: {fontSize: 12},
   spacer: {width: 8},
+  rowReverse: {flexDirection: 'row-reverse'},
 });
 
 const NBSP = '\u00A0';
+const SPACE = ' ';
 
 const TabbySnippet: React.FC<Props> = ({
   lang,
@@ -76,11 +80,29 @@ const TabbySnippet: React.FC<Props> = ({
 }: Props) => {
   const splittedPrice = (parseFloat(price) / 4).toFixed(decimals[currency]);
   return (
-    <View style={[styles.container, styles.withShadow, containerStyle]}>
-      <View style={styles.flex}>
-        <Text style={[styles.text, textStyle]}>
-          {`${STRINGS.promoMessage[lang]} ${splittedPrice}${NBSP}${currency} `}
-          <Text style={styles.underline}>{`${STRINGS.learnMore[lang]}`}</Text>
+    <View
+      style={[
+        styles.container,
+        styles.withShadow,
+        containerStyle,
+        lang === 'ar' ? styles.rowReverse : undefined,
+      ]}>
+      <View
+        style={[styles.flex, lang === 'ar' ? styles.rowReverse : undefined]}>
+        <Text
+          style={[
+            styles.text,
+            textStyle,
+            // eslint-disable-next-line react-native/no-inline-styles
+            {textAlign: lang === 'ar' ? 'right' : 'left'},
+          ]}>
+          {STRINGS.promoMessage[lang]}
+          <Text style={[styles.text, textStyle]}>{SPACE}</Text>
+          <Text>{splittedPrice}</Text>
+          <Text>{NBSP}</Text>
+          <Text>{currency}</Text>
+          <Text>{SPACE}</Text>
+          <Text style={styles.underline}>{STRINGS.learnMore[lang]}</Text>
         </Text>
       </View>
       <View style={styles.spacer} />
