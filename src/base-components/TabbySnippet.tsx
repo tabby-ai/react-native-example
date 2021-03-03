@@ -82,19 +82,21 @@ const TabbySnippet: React.FC<Props> = ({
   currency,
   containerStyle,
   textStyle,
+  onPress,
 }: Props) => {
   const splittedPrice = (parseFloat(price) / 4).toFixed(decimals[currency]);
   return (
     <TouchableOpacity
       style={{flexDirection: 'row', flex: 1}}
+      onPress={onPress}
       activeOpacity={0.9}>
       <View
         style={[
+          {flex: 1},
           styles.container,
           styles.withShadow,
           containerStyle,
           lang === 'ar' ? styles.rowReverse : undefined,
-          {flex: 1},
         ]}>
         <View
           style={[styles.flex, lang === 'ar' ? styles.rowReverse : undefined]}>
