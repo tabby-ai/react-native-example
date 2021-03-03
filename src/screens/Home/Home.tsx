@@ -93,17 +93,19 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
           </View>
 
           <View style={styles.divider} />
-          <View style={[styles.exampleBox, styles.centered]}>
+          <View style={[styles.exampleBox]}>
             <TabbySnippet
               lang="en"
               currency="AED"
               price={mockPayment.payment.amount}
               containerStyle={styles.withMargin}
+              onPress={() => {}}
             />
             <TabbySnippet
               lang="ar"
               currency="SAR"
               price={mockPayment.payment.amount}
+              onPress={() => {}}
             />
           </View>
         </View>

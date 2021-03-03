@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StyleGuide} from '../constants';
 import {SnippetLogo} from './Icons';
 
@@ -16,6 +18,7 @@ interface Props {
   lang: 'en' | 'ar';
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  onPress: () => void;
 }
 
 type Loc = {en: string; ar: string};
@@ -82,34 +85,38 @@ const TabbySnippet: React.FC<Props> = ({
 }: Props) => {
   const splittedPrice = (parseFloat(price) / 4).toFixed(decimals[currency]);
   return (
-    <View
-      style={[
-        styles.container,
-        styles.withShadow,
-        containerStyle,
-        lang === 'ar' ? styles.rowReverse : undefined,
-      ]}>
+    <TouchableOpacity
+      style={{flexDirection: 'row', flex: 1}}
+      activeOpacity={0.9}>
       <View
-        style={[styles.flex, lang === 'ar' ? styles.rowReverse : undefined]}>
-        <Text
-          style={[
-            styles.text,
-            textStyle,
-            // eslint-disable-next-line react-native/no-inline-styles
-            {textAlign: lang === 'ar' ? 'right' : 'left'},
-          ]}>
-          {STRINGS.promoMessage[lang]}
-          <Text style={[styles.text, textStyle]}>{SPACE}</Text>
-          <Text>{splittedPrice}</Text>
-          <Text>{NBSP}</Text>
-          <Text>{currency}</Text>
-          <Text>{SPACE}</Text>
-          <Text style={styles.underline}>{STRINGS.learnMore[lang]}</Text>
-        </Text>
+        style={[
+          styles.container,
+          styles.withShadow,
+          containerStyle,
+          lang === 'ar' ? styles.rowReverse : undefined,
+          {flex: 1},
+        ]}>
+        <View
+          style={[styles.flex, lang === 'ar' ? styles.rowReverse : undefined]}>
+          <Text
+            style={[
+              styles.text,
+              textStyle,
+              {textAlign: lang === 'ar' ? 'right' : 'left'},
+            ]}>
+            {STRINGS.promoMessage[lang]}
+            <Text style={[styles.text, textStyle]}>{SPACE}</Text>
+            <Text>{splittedPrice}</Text>
+            <Text>{NBSP}</Text>
+            <Text>{currency}</Text>
+            <Text>{SPACE}</Text>
+            <Text style={styles.underline}>{STRINGS.learnMore[lang]}</Text>
+          </Text>
+        </View>
+        <View style={styles.spacer} />
+        <SnippetLogo />
       </View>
-      <View style={styles.spacer} />
-      <SnippetLogo />
-    </View>
+    </TouchableOpacity>
   );
 };
 
