@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import {StyleGuide} from '../constants';
 import {SnippetLogo} from './Icons';
 
@@ -7,6 +14,8 @@ interface Props {
   price: string; // 300
   currency: 'AED' | 'SAR' | 'KWD' | 'BDH';
   lang: 'en' | 'ar';
+  containerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 type Loc = {en: string; ar: string};
