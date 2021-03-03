@@ -1,0 +1,80 @@
+import {RouteProp} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {BrandLogo, Spinner} from '../../base-components/Icons';
+import {mockPaymentText, ROUTES, StyleGuide} from '../../constants';
+import {HomeStackParamsList} from '../../navigator/HomeStack';
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  HomeStackParamsList,
+  ROUTES.Home
+>;
+
+interface Props {
+  navigation: HomeScreenNavigationProp;
+  route: RouteProp<HomeStackParamsList, ROUTES.Home>;
+}
+
+const styles = StyleSheet.create({
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 12,
+    padding: 12,
+    backgroundColor: StyleGuide.colors.brand,
+    marginVertical: 12,
+  },
+  buttonText: {
+    marginRight: 8,
+  },
+  paymentInfoContainer: {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 32,
+  },
+  container: {flex: 1},
+  centered: {justifyContent: 'center', alignItems: 'center'},
+});
+
+const Home: React.FC<Props> = ({navigation}: Props) => {
+  const {top, bottom: paddingBottom} = useSafeAreaInsets();
+
+  const handlePayLaterPress = async () => {
+    navigation.navigate(ROUTES.Payment, {type: 'paylater'});
+  };
+
+  const handleInstallmentsPress = async () => {
+    navigation.navigate(ROUTES.Payment, {type: 'installments'});
+  };
+
+  return (
+    <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
+      <View style={styles.centered}>
+        <BrandLogo size={50} />
+      </View>
+      <View style={[styles.container, styles.centered]}>
+        <View style={styles.paymentInfoContainer}>
+          <Text>Purchase repsesentation:</Text>
+          <Text>{mockPaymentText}</Text>
+        </View>
+        <TouchableOpacity onPress={handlePayLaterPress} style={styles.button}>
+          <Text style={styles.buttonText}>Pay later</Text>
+          <Spinner size={24} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleInstallmentsPress}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Pay in installments</Text>
+          <Spinner size={24} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+export {Home};
