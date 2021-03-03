@@ -24,13 +24,17 @@ interface Props {
 type Loc = {en: string; ar: string};
 
 const STRINGS: {[key: string]: Loc} = {
-  promoMessage: {
+  promoMessage1: {
     en: 'or 4 interest-free payments of',
-    ar: 'ةيرهش طاسقأ ٣ ىلع يقابلا طسّقو ،مويلا غلبملا عبر عفدا',
+    ar: 'ادفع ربع القيمة اليوم',
+  },
+  promoMessage2: {
+    en: '',
+    ar: '، وقسط الباقي على ٣ أقساط شهرية. بدون رسوم أو فوائد',
   },
   learnMore: {
-    en: 'Learn more',
-    ar: 'ةيواستم',
+    en: 'Learn\u00A0more',
+    ar: 'للمزيد',
   },
 };
 
@@ -106,12 +110,27 @@ const TabbySnippet: React.FC<Props> = ({
               textStyle,
               {textAlign: lang === 'ar' ? 'right' : 'left'},
             ]}>
-            {STRINGS.promoMessage[lang]}
+            {STRINGS.promoMessage1[lang]}
             <Text style={[styles.text, textStyle]}>{SPACE}</Text>
-            <Text>{splittedPrice}</Text>
+            {lang === 'en' ? (
+              <Text>{splittedPrice}</Text>
+            ) : (
+              <Text>{currency}</Text>
+            )}
             <Text>{NBSP}</Text>
-            <Text>{currency}</Text>
-            <Text>{SPACE}</Text>
+            {lang === 'en' ? (
+              <Text>{currency}</Text>
+            ) : (
+              <Text>{splittedPrice}</Text>
+            )}
+            {lang === 'ar' ? (
+              <>
+                <Text>{STRINGS.promoMessage2[lang]}</Text>
+                <Text>{SPACE}</Text>
+              </>
+            ) : (
+              <Text>{SPACE}</Text>
+            )}
             <Text style={styles.underline}>{STRINGS.learnMore[lang]}</Text>
           </Text>
         </View>
