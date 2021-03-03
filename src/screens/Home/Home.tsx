@@ -65,6 +65,10 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
     navigation.navigate(ROUTES.Payment, {type: 'installments'});
   };
 
+  const handleSnippetPress = (lang: 'en' | 'ar') => {
+    navigation.navigate(ROUTES.SnippetWebView, {lang});
+  };
+
   return (
     <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
       <ScrollView>
@@ -99,13 +103,17 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
               currency="AED"
               price={mockPayment.payment.amount}
               containerStyle={styles.withMargin}
-              onPress={() => {}}
+              onPress={() => {
+                handleSnippetPress('en');
+              }}
             />
             <TabbySnippet
               lang="ar"
               currency="SAR"
               price={mockPayment.payment.amount}
-              onPress={() => {}}
+              onPress={() => {
+                handleSnippetPress('ar');
+              }}
             />
           </View>
         </View>
