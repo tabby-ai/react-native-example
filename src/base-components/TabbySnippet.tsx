@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(41,41,41,0.15)',
   },
   withShadow: {
     elevation: 3,
