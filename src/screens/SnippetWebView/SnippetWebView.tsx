@@ -30,8 +30,11 @@ const SnippetWebView = ({route, navigation}: Props) => {
   const {top: paddingTop, bottom: paddingBottom} = useSafeAreaInsets();
 
   const {
-    params: {url},
+    params: {lang},
   } = route;
+
+  const isRTL = lang === 'ar';
+  const url = webViewUrls[lang];
 
   const back = () => {
     navigation.goBack();
@@ -60,7 +63,7 @@ const SnippetWebView = ({route, navigation}: Props) => {
             alignItems: 'center',
             backgroundColor: 'transparent',
           }}>
-          <TabbySpinner isRTL={url === webViewUrls.ar} />
+          <TabbySpinner isRTL={isRTL} />
         </View>
       ) : null}
     </View>
