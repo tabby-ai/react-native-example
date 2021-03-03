@@ -2,10 +2,16 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
-import {mockPaymentText, ROUTES, StyleGuide} from '../../constants';
+import {TabbySnippet} from '../../base-components/TabbySnippet';
+import {
+  mockPaymentText,
+  ROUTES,
+  StyleGuide,
+  mockPayment,
+} from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 
 type HomeScreenNavigationProp = StackNavigationProp<
@@ -38,6 +44,14 @@ const styles = StyleSheet.create({
   },
   container: {flex: 1},
   centered: {justifyContent: 'center', alignItems: 'center'},
+  divider: {
+    height: 1,
+    backgroundColor: StyleGuide.colors.black,
+    opacity: 0.3,
+    marginHorizontal: 12,
+  },
+  exampleBox: {paddingVertical: 12},
+  withMargin: {marginBottom: 24},
 });
 
 const Home: React.FC<Props> = ({navigation}: Props) => {
@@ -53,26 +67,47 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
   return (
     <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
-      <View style={styles.centered}>
-        <BrandLogo size={50} />
-      </View>
-      <View style={[styles.container, styles.centered]}>
-        <View style={styles.paymentInfoContainer}>
-          <Text>Purchase repsesentation:</Text>
-          <Text>{mockPaymentText}</Text>
+      <ScrollView>
+        <View style={styles.centered}>
+          <BrandLogo size={50} />
         </View>
-        <TouchableOpacity onPress={handlePayLaterPress} style={styles.button}>
-          <Text style={styles.buttonText}>Pay later</Text>
-          <Spinner size={24} />
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={[styles.exampleBox, styles.centered]}>
+            <View style={styles.paymentInfoContainer}>
+              <Text>Purchase repsesentation:</Text>
+              <Text>{mockPaymentText}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={handlePayLaterPress}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Pay later</Text>
+              <Spinner size={24} />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={handleInstallmentsPress}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Pay in installments</Text>
-          <Spinner size={24} />
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              onPress={handleInstallmentsPress}
+              style={styles.button}>
+              <Text style={styles.buttonText}>Pay in installments</Text>
+              <Spinner size={24} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.divider} />
+          <View style={[styles.exampleBox, styles.centered]}>
+            <TabbySnippet
+              lang="en"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              containerStyle={styles.withMargin}
+            />
+            <TabbySnippet
+              lang="ar"
+              currency="SAR"
+              price={mockPayment.payment.amount}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
