@@ -52,7 +52,7 @@ const Spinner: React.FC<Props> = ({size}: Props) => {
   );
 };
 
-const SnippetLogo: React.FC<Props> = ({size}: Props) => {
+const SnippetLogo: React.FC = () => {
   return (
     <Svg width={65} height={26} viewBox="0 0 65 26" fill="none">
       <Rect width={64.395} height={26} rx={4.174} fill="#3EEDBF" />
