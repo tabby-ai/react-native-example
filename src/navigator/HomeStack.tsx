@@ -4,10 +4,12 @@ import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
 import {Home} from '../screens/Home';
 import {Payment} from '../screens/Payment';
 import {ROUTES, TabbyPurchaseType} from '../constants';
+import {SnippetWebView} from '../screens/SnippetWebView/SnippetWebView';
 
 export type HomeStackParamsList = {
   [ROUTES.Home]: undefined;
   [ROUTES.Payment]: {type: TabbyPurchaseType};
+  [ROUTES.SnippetWebView]: {lang: 'en' | 'ar'};
 };
 
 const HomeStack = createStackNavigator<HomeStackParamsList>();
@@ -33,6 +35,14 @@ function HomeStackScreen() {
           headerShown: false,
           gestureEnabled: false,
           ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <HomeStack.Screen
+        name={ROUTES.SnippetWebView}
+        component={SnippetWebView}
+        options={{
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
         }}
       />
     </HomeStack.Navigator>
