@@ -67,12 +67,18 @@ const styles = StyleSheet.create({
 
 const NBSP = '\u00A0';
 
-const TabbySnippet: React.FC<Props> = ({lang, price, currency}: Props) => {
+const TabbySnippet: React.FC<Props> = ({
+  lang,
+  price,
+  currency,
+  containerStyle,
+  textStyle,
+}: Props) => {
   const splittedPrice = (parseFloat(price) / 4).toFixed(decimals[currency]);
   return (
-    <View style={[styles.container, styles.withShadow]}>
+    <View style={[styles.container, styles.withShadow, containerStyle]}>
       <View style={styles.flex}>
-        <Text style={styles.text}>
+        <Text style={[styles.text, textStyle]}>
           {`${STRINGS.promoMessage[lang]} ${splittedPrice}${NBSP}${currency} `}
           <Text style={styles.underline}>{`${STRINGS.learnMore[lang]}`}</Text>
         </Text>
