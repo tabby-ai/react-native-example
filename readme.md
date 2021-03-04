@@ -38,7 +38,38 @@ const mockPayment = {
 
 ![](docs/example.gif)
 
-## How to run
+## Snippets
+
+1. in your navigation structure build a specific route (see `HomeStack.tsx` -> `ROUTES.SnippetWebView`)
+2. Define your press handler
+
+```typescript
+const handleSnippetPress = (lang: 'en' | 'ar') => {
+  navigation.navigate(ROUTES.SnippetWebView, {lang});
+};
+```
+
+3. Just import and render the component
+
+```typescript
+<TabbySnippet
+  lang="en"
+  currency="AED"
+  price="340"
+  containerStyle={styles.withMargin}
+  onPress={() => {
+    handleSnippetPress('en');
+  }}
+/>
+```
+
+4. Place these snippets somewhere across the app as recommended by your integration manager
+5. It will look like this
+   ![](docs/snippets.gif)
+
+---
+
+## How to run the example app?
 
 1. `npm i`
 2. `cd ios && pod install`
