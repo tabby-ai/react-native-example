@@ -109,7 +109,7 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
             />
             <TabbySnippet
               lang="ar"
-              currency="SAR"
+              currency="AED"
               price={mockPayment.payment.amount}
               onPress={() => {
                 handleSnippetPress('ar');
