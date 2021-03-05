@@ -66,6 +66,30 @@ const handleSnippetPress = (lang: 'en' | 'ar') => {
 4. Place these snippets somewhere across the app as recommended by your integration manager
 5. It will look like this
    ![](docs/snippets.gif)
+6. Please bear in mind - for Arabic version of snippet we recommend `Cairo` fontFamily. In React Native you should link font binaries by yourself. Then just pass `textStyle` prop.
+   `textStyle` prop is completely optional and if passed, `<TabbySnippet />` component will respect passed styles.
+
+```typescript
+const styles = StyleSheed.create({
+  snippetText: {
+    fontFamily: "Cairo"
+    // ...your other styles
+  }
+})
+
+<TabbySnippet
+  lang="ar"
+  currency="AED"
+  price="340"
+  containerStyle={styles.withMargin}
+  textStyle={styles.snippetText} // HERE WE GO!
+  onPress={() => {
+    handleSnippetPress('ar');
+  }}
+/>
+```
+
+![](docs/Cairo-font.jpg)
 
 ---
 
