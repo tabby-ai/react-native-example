@@ -97,7 +97,7 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
                 availableProducts.push('installments');
               }
               if (available_products.pay_later) {
-                availableProducts.push('paylater');
+                availableProducts.push('pay_later');
               }
               setProducts(availableProducts);
             });
@@ -124,7 +124,7 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
 
   const handlePayLaterPress = async () => {
     navigation.navigate(ROUTES.Payment, {
-      type: 'paylater',
+      type: 'pay_later',
       sessionId,
       merchantCode: payload.merchant_code,
     });
@@ -154,7 +154,7 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
     );
   }
 
-  const withPaylater = products.includes('paylater');
+  const withPaylater = products.includes('pay_later');
   const withInstallments = products.includes('installments');
 
   return (

@@ -33,6 +33,7 @@ type WebViewResult = 'cancelled' | 'authorized';
 const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
   const [url, setUrl] = React.useState('');
+  console.log(url);
 
   const {
     params: {type: productType, sessionId, merchantCode},

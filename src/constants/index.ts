@@ -4,4 +4,4 @@ import {mockPayment, mockPaymentText} from './payment';
 
 export {ROUTES, StyleGuide, mockPayment, mockPaymentText};
 
-export type TabbyPurchaseType = 'paylater' | 'installments';
+export type TabbyPurchaseType = 'pay_later' | 'installments';
