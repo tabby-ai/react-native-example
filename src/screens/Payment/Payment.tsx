@@ -7,8 +7,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WebView} from 'react-native-webview';
 import {BrandLogo, ClosingCross} from '../../base-components/Icons';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
-import {mockPayment, ROUTES, StyleGuide} from '../../constants';
-import {tabbyApiKey, tabbyApiHost} from '../../constants/api';
+import {ROUTES, StyleGuide} from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 import {notify} from '../../utils/notifier';
 import {buildUrl} from '../../utils/webViewUrl';
@@ -29,21 +28,14 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row'},
 });
 
-const req = {
-  merchant_code: 'ae',
-  lang: 'en',
-  ...mockPayment,
-};
-
 type WebViewResult = 'cancelled' | 'authorized';
 
 const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
-  const [sessionId, setSessionId] = React.useState<string>('');
   const [url, setUrl] = React.useState('');
 
   const {
-    params: {type: productType},
+    params: {type: productType, sessionId, merchantCode},
   } = route;
 
   const INJECTED_JAVASCRIPT = `(function() {
@@ -61,57 +53,19 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
     })();`;
 
   const back = () => {
-    navigation.goBack();
+    navigation.navigate(ROUTES.Home);
   };
-
-  React.useEffect(() => {
-    const createSession = () => {
-      fetch(`${tabbyApiHost}/checkout`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tabbyApiKey}`,
-        },
-        body: JSON.stringify(req),
-      })
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json().then((data) => {
-              const {id} = data as {id: string};
-              setSessionId(id);
-            });
-          } else {
-            navigation.goBack();
-            notify({
-              message: '⛔️ Error creating session',
-              floating: true,
-            });
-          }
-        })
-        .catch(() => {
-          navigation.goBack();
-          notify({
-            message: '⛔️ Error creating session',
-
-            floating: true,
-          });
-        });
-    };
-
-    createSession();
-  }, [navigation]);
 
   React.useEffect(() => {
     if (sessionId) {
       const tabbyCheckoutUrl = buildUrl({
         sessionId,
-        merchantCode: req.merchant_code,
+        merchantCode,
         product: productType,
       });
       setUrl(tabbyCheckoutUrl);
     }
-  }, [sessionId, productType]);
+  }, [sessionId, productType, merchantCode]);
 
   const handleCancel = () => {
     navigation.goBack();
@@ -122,7 +76,7 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   };
 
   const handleSuccess = () => {
-    navigation.goBack();
+    back();
     notify({
       message: '🎉 Success',
       floating: true,

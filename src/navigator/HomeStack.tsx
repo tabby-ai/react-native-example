@@ -5,10 +5,17 @@ import {Home} from '../screens/Home';
 import {Payment} from '../screens/Payment';
 import {ROUTES, TabbyPurchaseType} from '../constants';
 import {SnippetWebView} from '../screens/SnippetWebView/SnippetWebView';
+import {Checkout} from '../screens/Checkout';
+import {TabbyCheckoutPayload} from '../constants/payment';
 
 export type HomeStackParamsList = {
   [ROUTES.Home]: undefined;
-  [ROUTES.Payment]: {type: TabbyPurchaseType};
+  [ROUTES.Checkout]: {payload: TabbyCheckoutPayload};
+  [ROUTES.Payment]: {
+    type: TabbyPurchaseType;
+    sessionId: string;
+    merchantCode: string;
+  };
   [ROUTES.SnippetWebView]: {lang: 'en' | 'ar'};
 };
 
@@ -31,6 +38,15 @@ function HomeStackScreen() {
       <HomeStack.Screen
         name={ROUTES.Payment}
         component={Payment}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <HomeStack.Screen
+        name={ROUTES.Checkout}
+        component={Checkout}
         options={{
           headerShown: false,
           gestureEnabled: false,

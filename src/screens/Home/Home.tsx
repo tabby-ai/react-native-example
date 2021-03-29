@@ -57,12 +57,10 @@ const styles = StyleSheet.create({
 const Home: React.FC<Props> = ({navigation}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
 
-  const handlePayLaterPress = async () => {
-    navigation.navigate(ROUTES.Payment, {type: 'paylater'});
-  };
-
-  const handleInstallmentsPress = async () => {
-    navigation.navigate(ROUTES.Payment, {type: 'installments'});
+  const handleBeginCheckout = async () => {
+    navigation.navigate(ROUTES.Checkout, {
+      payload: {...mockPayment, merchant_code: 'ae', lang: 'en'},
+    });
   };
 
   const handleSnippetPress = (lang: 'en' | 'ar') => {
@@ -82,16 +80,9 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
               <Text>{mockPaymentText}</Text>
             </View>
             <TouchableOpacity
-              onPress={handlePayLaterPress}
+              onPress={handleBeginCheckout}
               style={styles.button}>
-              <Text style={styles.buttonText}>Pay later</Text>
-              <Spinner size={24} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={handleInstallmentsPress}
-              style={styles.button}>
-              <Text style={styles.buttonText}>Pay in installments</Text>
+              <Text style={styles.buttonText}>Pay With Tabby</Text>
               <Spinner size={24} />
             </TouchableOpacity>
           </View>
