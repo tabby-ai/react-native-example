@@ -61,7 +61,6 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
   const [sessionId, setSessionId] = React.useState<string>('');
   const [products, setProducts] = React.useState<TabbyPurchaseType[]>([]);
-  console.log(products);
 
   const {payload} = route.params;
 
