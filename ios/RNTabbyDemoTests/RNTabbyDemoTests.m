@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface tabbycheckoutTests : XCTestCase
+@interface RNTabbyDemoTests : XCTestCase
 
 @end
 
-@implementation tabbycheckoutTests
+@implementation RNTabbyDemoTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1130"
+   LastUpgradeVersion = "1210"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "tabbycheckout.app"
-               BlueprintName = "tabbycheckout"
-               ReferencedContainer = "container:tabbycheckout.xcodeproj">
+               BuildableName = "RNTabbyDemo.app"
+               BlueprintName = "RNTabbyDemo"
+               ReferencedContainer = "container:RNTabbyDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "tabbycheckoutTests.xctest"
-               BlueprintName = "tabbycheckoutTests"
-               ReferencedContainer = "container:tabbycheckout.xcodeproj">
+               BuildableName = "RNTabbyDemoTests.xctest"
+               BlueprintName = "RNTabbyDemoTests"
+               ReferencedContainer = "container:RNTabbyDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tabbycheckout.app"
-            BlueprintName = "tabbycheckout"
-            ReferencedContainer = "container:tabbycheckout.xcodeproj">
+            BuildableName = "RNTabbyDemo.app"
+            BlueprintName = "RNTabbyDemo"
+            ReferencedContainer = "container:RNTabbyDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "tabbycheckout.app"
-            BlueprintName = "tabbycheckout"
-            ReferencedContainer = "container:tabbycheckout.xcodeproj">
+            BuildableName = "RNTabbyDemo.app"
+            BlueprintName = "RNTabbyDemo"
+            ReferencedContainer = "container:RNTabbyDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
