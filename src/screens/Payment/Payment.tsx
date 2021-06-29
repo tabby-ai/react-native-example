@@ -63,6 +63,7 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
         merchantCode,
         product: productType,
       });
+      console.log({tabbyCheckoutUrl});
       setUrl(tabbyCheckoutUrl);
     }
   }, [sessionId, productType, merchantCode]);

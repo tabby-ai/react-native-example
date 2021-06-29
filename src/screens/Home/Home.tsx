@@ -59,7 +59,7 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
   const handleBeginCheckout = async () => {
     navigation.navigate(ROUTES.Checkout, {
-      payload: {...mockPayment, merchant_code: 'ae', lang: 'en'},
+      payload: {...mockPayment, merchant_code: 'sa', lang: 'en'},
     });
   };
 
