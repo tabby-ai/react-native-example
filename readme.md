@@ -4,7 +4,7 @@
 
 > The only requirement is `react-native-webview`. So you can integrate Tabby checkout for both Expo and pure React Native apps
 
-## Impelemtation
+## Implementation
 
 1. Let user decide to pay ether "Pay Later" or "Installments"
    ![](docs/home.png)
