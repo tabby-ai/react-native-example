@@ -115,6 +115,7 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
 
             console.log(nativeEvent);
           }}
+          enableApplePay
           onHttpError={(syntheticEvent) => {
             const {nativeEvent} = syntheticEvent;
             console.log(nativeEvent);
