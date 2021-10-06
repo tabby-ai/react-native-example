@@ -38,20 +38,6 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
     params: {type: productType, sessionId, merchantCode},
   } = route;
 
-  const INJECTED_JAVASCRIPT = `(function() {
-    var launchTabby = true;
-    window.Tabby.onChange = function(data) {
-      window.ReactNativeWebView.postMessage(data.payment.status);
-      if (data.status === 'created' && launchTabby) {
-        Tabby.launch({product: '${productType}'});
-        launchTabby = false;
-      }
-    };
-    window.Tabby.onClose = function() {
-      window.ReactNativeWebView.postMessage('cancelled');
-    };
-    })();`;
-
   const back = () => {
     navigation.navigate(ROUTES.Home);
   };
@@ -122,7 +108,6 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
           allowFileAccessFromFileURLs
           allowsLinkPreview
           domStorageEnabled
-          injectedJavaScript={INJECTED_JAVASCRIPT}
           style={styles.container}
           source={{uri: url}}
           onError={(syntheticEvent) => {
