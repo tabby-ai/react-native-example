@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row'},
 });
 
-type WebViewResult = 'cancelled' | 'authorized';
+type WebViewResult = 'close' | 'authorized' | 'rejected';
 
 const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
@@ -71,7 +71,8 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   };
 
   const parseMessage = (msg: WebViewResult) => {
-    if (msg === 'cancelled') {
+    console.log({msg});
+    if (msg === 'close' || msg === 'rejected') {
       handleCancel();
     }
     if (msg === 'authorized') {
@@ -121,7 +122,6 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
             console.log(nativeEvent);
           }}
           onMessage={({nativeEvent: {data}}) => {
-            console.log(data);
             const d = data as WebViewResult;
             parseMessage(d);
           }}
