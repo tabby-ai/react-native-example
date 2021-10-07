@@ -270,7 +270,7 @@ PODS:
   - React-jsinspector (0.64.1)
   - react-native-safe-area-context (3.2.0):
     - React-Core
-  - react-native-webview (11.6.4):
+  - react-native-webview (11.14.0):
     - React-Core
   - React-perflogger (0.64.1)
   - React-RCTActionSheet (0.64.1):
@@ -505,7 +505,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 7b423f9e248eae65987838148c36eec1dbfe0b53
-  FBReactNativeSpec: cee5926bb97a6322ba763fa1ed17d25e020f3df8
+  FBReactNativeSpec: acf501f279e058bd9a53a4355fd34572759775b5
   Flipper: d3da1aa199aad94455ae725e9f3aa43f3ec17021
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c
@@ -529,7 +529,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 124e8f99992490d0d13e0649d950d3e1aae06fe9
   React-jsinspector: 500a59626037be5b3b3d89c5151bc3baa9abf1a9
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
-  react-native-webview: 1a19adb5578cdf7f005b7961dcc50c1c6b70f41b
+  react-native-webview: d70bc760daaa0e2667dec569b93014882565819c
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
   React-RCTActionSheet: fc376be462c9c8d6ad82c0905442fd77f82a9d2a
   React-RCTAnimation: ba0a1c3a2738be224a08092fa7f1b444ab77d309
