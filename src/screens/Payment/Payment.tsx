@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row'},
 });
 
-type WebViewResult = 'cancelled' | 'authorized';
+type WebViewResult = 'close' | 'authorized' | 'rejected';
 
 const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
@@ -37,20 +37,6 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const {
     params: {type: productType, sessionId, merchantCode},
   } = route;
-
-  const INJECTED_JAVASCRIPT = `(function() {
-    var launchTabby = true;
-    window.Tabby.onChange = function(data) {
-      window.ReactNativeWebView.postMessage(data.payment.status);
-      if (data.status === 'created' && launchTabby) {
-        Tabby.launch({product: '${productType}'});
-        launchTabby = false;
-      }
-    };
-    window.Tabby.onClose = function() {
-      window.ReactNativeWebView.postMessage('cancelled');
-    };
-    })();`;
 
   const back = () => {
     navigation.navigate(ROUTES.Home);
@@ -85,7 +71,8 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   };
 
   const parseMessage = (msg: WebViewResult) => {
-    if (msg === 'cancelled') {
+    console.log({msg});
+    if (msg === 'close' || msg === 'rejected') {
       handleCancel();
     }
     if (msg === 'authorized') {
@@ -122,7 +109,6 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
           allowFileAccessFromFileURLs
           allowsLinkPreview
           domStorageEnabled
-          injectedJavaScript={INJECTED_JAVASCRIPT}
           style={styles.container}
           source={{uri: url}}
           onError={(syntheticEvent) => {
@@ -130,12 +116,12 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
 
             console.log(nativeEvent);
           }}
+          enableApplePay
           onHttpError={(syntheticEvent) => {
             const {nativeEvent} = syntheticEvent;
             console.log(nativeEvent);
           }}
           onMessage={({nativeEvent: {data}}) => {
-            console.log(data);
             const d = data as WebViewResult;
             parseMessage(d);
           }}

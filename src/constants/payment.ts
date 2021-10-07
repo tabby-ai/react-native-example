@@ -1,10 +1,11 @@
 const mockPaymentText = `
 payment: {
   amount: '340.00',
-  currency: 'SAR',
+  currency: 'AED',
   buyer: {
     email: 'successful.payment@tabby.ai',
     phone: '500000001'
+    name: 'Yazan Khalid',
   },
 }
 `;
@@ -15,6 +16,7 @@ interface Payment {
   buyer: {
     email: string;
     phone: string;
+    name?: string;
   };
 }
 
@@ -38,10 +40,11 @@ export interface CheckoutSession {
 const mockPayment: {payment: Payment} = {
   payment: {
     amount: '340.00',
-    currency: 'SAR',
+    currency: 'AED',
     buyer: {
       email: 'successful.payment@tabby.ai',
       phone: '500000001',
+      name: 'Yazan Khalid',
     },
   },
 };
