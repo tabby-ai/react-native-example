@@ -72,4 +72,83 @@ const SnippetLogo: React.FC = () => {
   );
 };
 
-export {Spinner, BrandLogo, ClosingCross, SnippetLogo};
+const Round1: React.FC<Props> = ({size}: Props) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
+      <Circle
+        cx={13}
+        cy={13}
+        r={12.75}
+        stroke="#DBDBDF"
+        fill="#FFF"
+        strokeWidth={0.5}
+      />
+      <Path d="M24 12c0-5.523-4.925-10-11-10v10h11z" fill="#54545C" />
+    </Svg>
+  );
+};
+
+const Round2: React.FC<Props> = ({size}: Props) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
+      <Circle
+        cx={13}
+        cy={13}
+        r={12.75}
+        fill="#FFF"
+        stroke="#DADBDF"
+        strokeWidth={0.5}
+      />
+      <Path
+        d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2v22z"
+        fill="#54545C"
+      />
+    </Svg>
+  );
+};
+
+const Round3: React.FC<Props> = ({size}: Props) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
+      <Circle
+        cx={13}
+        cy={13}
+        r={12.75}
+        fill="#FFF"
+        stroke="#DADBDF"
+        strokeWidth={0.5}
+      />
+      <Path
+        d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2v11H2c0 6.075 4.925 11 11 11z"
+        fill="#54545C"
+      />
+    </Svg>
+  );
+};
+
+const Round4: React.FC<Props> = ({size}: Props) => {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
+      <Circle
+        cx={13}
+        cy={13}
+        r={12.75}
+        stroke="#54545C"
+        fill="#FFF"
+        strokeWidth={0.5}
+      />
+      <Circle cx={13} cy={13} r={11} fill="#54545C" />
+    </Svg>
+  );
+};
+
+export {
+  Spinner,
+  BrandLogo,
+  ClosingCross,
+  SnippetLogo,
+  Round1,
+  Round2,
+  Round3,
+  Round4,
+};
