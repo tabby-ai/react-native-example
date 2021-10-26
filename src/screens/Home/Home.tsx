@@ -5,7 +5,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
-import {TabbySnippet} from '../../base-components/TabbySnippet';
+import {TabbyProductPageSnippet} from '../../base-components/TabbyProductPageSnippet';
 import {
   mockPaymentText,
   ROUTES,
@@ -89,7 +89,7 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
           <View style={styles.divider} />
           <View style={[styles.exampleBox]}>
-            <TabbySnippet
+            <TabbyProductPageSnippet
               lang="en"
               currency="AED"
               price={mockPayment.payment.amount}
@@ -98,7 +98,7 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
                 handleSnippetPress('en');
               }}
             />
-            <TabbySnippet
+            <TabbyProductPageSnippet
               lang="ar"
               currency="AED"
               price={mockPayment.payment.amount}

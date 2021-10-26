@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 const NBSP = '\u00A0';
 const SPACE = ' ';
 
-const TabbySnippet: React.FC<Props> = ({
+const TabbyProductPageSnippet: React.FC<Props> = ({
   lang,
   price,
   currency,
@@ -141,4 +141,4 @@ const TabbySnippet: React.FC<Props> = ({
   );
 };
 
-export {TabbySnippet};
+export {TabbyProductPageSnippet};
