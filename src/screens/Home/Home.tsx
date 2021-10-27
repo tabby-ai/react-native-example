@@ -1,7 +1,7 @@
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, I18nManager} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
@@ -120,14 +120,7 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
           <View style={styles.exampleBox}>
             <Text style={styles.title}>Checkout snippets</Text>
             <TabbyCheckoutSnippet
-              lang="en"
-              currency="AED"
-              price={mockPayment.payment.amount}
-              onPress={noop}
-            />
-            <View style={styles.withMargin} />
-            <TabbyCheckoutSnippet
-              lang="ar"
+              lang={I18nManager.isRTL ? 'ar' : 'en'}
               currency="AED"
               price={mockPayment.payment.amount}
               onPress={noop}
