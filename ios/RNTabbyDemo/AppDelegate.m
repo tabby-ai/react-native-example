@@ -4,6 +4,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import "React/RCTI18nUtil.h"
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -46,6 +48,10 @@ static void InitializeFlipper(UIApplication *application) {
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+
+  // enable RTL
+  [[RCTI18nUtil sharedInstance] allowRTL:YES];
+
   [self.window makeKeyAndVisible];
   return YES;
 }

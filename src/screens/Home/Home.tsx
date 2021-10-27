@@ -5,14 +5,16 @@ import {View, Text, StyleSheet} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
-import {TabbySnippet} from '../../base-components/TabbySnippet';
+import {TabbyProductPageSnippet} from '../../base-components/TabbyProductPageSnippet';
 import {
   mockPaymentText,
   ROUTES,
   StyleGuide,
   mockPayment,
+  noop,
 } from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
+import {TabbyCheckoutSnippet} from '../../base-components/TabbyCheckoutSnippet';
 
 type HomeScreenNavigationProp = StackNavigationProp<
   HomeStackParamsList,
@@ -52,6 +54,12 @@ const styles = StyleSheet.create({
   },
   exampleBox: {paddingVertical: 12},
   withMargin: {marginBottom: 24},
+  title: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
 });
 
 const Home: React.FC<Props> = ({navigation}: Props) => {
@@ -88,8 +96,9 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
           </View>
 
           <View style={styles.divider} />
-          <View style={[styles.exampleBox]}>
-            <TabbySnippet
+          <View style={styles.exampleBox}>
+            <Text style={styles.title}>Product page snippets</Text>
+            <TabbyProductPageSnippet
               lang="en"
               currency="AED"
               price={mockPayment.payment.amount}
@@ -98,13 +107,30 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
                 handleSnippetPress('en');
               }}
             />
-            <TabbySnippet
+            <TabbyProductPageSnippet
               lang="ar"
               currency="AED"
               price={mockPayment.payment.amount}
               onPress={() => {
                 handleSnippetPress('ar');
               }}
+            />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.exampleBox}>
+            <Text style={styles.title}>Checkout snippets</Text>
+            <TabbyCheckoutSnippet
+              lang="en"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              onPress={noop}
+            />
+            <View style={styles.withMargin} />
+            <TabbyCheckoutSnippet
+              lang="ar"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              onPress={noop}
             />
           </View>
         </View>
