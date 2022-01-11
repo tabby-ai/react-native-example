@@ -3,7 +3,7 @@ import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
 
 import {Home} from '../screens/Home';
 import {Payment} from '../screens/Payment';
-import {ROUTES, TabbyPurchaseType} from '../constants';
+import {ROUTES} from '../constants';
 import {SnippetWebView} from '../screens/SnippetWebView/SnippetWebView';
 import {Checkout} from '../screens/Checkout';
 import {TabbyCheckoutPayload} from '../constants/payment';
@@ -12,9 +12,7 @@ export type HomeStackParamsList = {
   [ROUTES.Home]: undefined;
   [ROUTES.Checkout]: {payload: TabbyCheckoutPayload};
   [ROUTES.Payment]: {
-    type: TabbyPurchaseType;
-    sessionId: string;
-    merchantCode: string;
+    url: string;
   };
   [ROUTES.SnippetWebView]: {lang: 'en' | 'ar'};
 };

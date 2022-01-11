@@ -1,20 +1,28 @@
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
-import {View, Text, StyleSheet, I18nManager} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  TabbyLimitSnippet,
+  TabbyCheckoutSnippet,
+  TabbyProductPageSnippet,
+} from 'tabby-react-native-sdk';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
-import {TabbyProductPageSnippet} from '../../base-components/TabbyProductPageSnippet';
 import {
   mockPaymentText,
   ROUTES,
   StyleGuide,
   mockPayment,
-  noop,
 } from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
-import {TabbyCheckoutSnippet} from '../../base-components/TabbyCheckoutSnippet';
 
 type HomeScreenNavigationProp = StackNavigationProp<
   HomeStackParamsList,
@@ -71,10 +79,6 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
     });
   };
 
-  const handleSnippetPress = (lang: 'en' | 'ar') => {
-    navigation.navigate(ROUTES.SnippetWebView, {lang});
-  };
-
   return (
     <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
       <ScrollView>
@@ -97,33 +101,39 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
+            <Text style={styles.title}>Product Limit Snippet</Text>
+            <TabbyLimitSnippet lang="en" containerStyle={styles.withMargin} />
+            <TabbyLimitSnippet lang="ar" />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.exampleBox}>
             <Text style={styles.title}>Product page snippets</Text>
             <TabbyProductPageSnippet
               lang="en"
               currency="AED"
               price={mockPayment.payment.amount}
               containerStyle={styles.withMargin}
-              onPress={() => {
-                handleSnippetPress('en');
-              }}
             />
             <TabbyProductPageSnippet
               lang="ar"
               currency="AED"
               price={mockPayment.payment.amount}
-              onPress={() => {
-                handleSnippetPress('ar');
-              }}
             />
           </View>
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
             <Text style={styles.title}>Checkout snippets</Text>
             <TabbyCheckoutSnippet
-              lang={I18nManager.isRTL ? 'ar' : 'en'}
+              lang="en"
               currency="AED"
               price={mockPayment.payment.amount}
-              onPress={noop}
+              containerStyle={styles.withMargin}
+            />
+            <TabbyCheckoutSnippet
+              lang="ar"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              circleFillColor={['#3EEDBF', null, '#3EEDBF', null]}
             />
           </View>
         </View>
