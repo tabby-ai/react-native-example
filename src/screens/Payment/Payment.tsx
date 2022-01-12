@@ -18,7 +18,7 @@ interface Props {
   route: RouteProp<HomeStackParamsList, ROUTES.Payment>;
 }
 
-type WebViewResult = 'close' | 'authorized' | 'rejected';
+type WebViewResult = 'close' | 'authorized' | 'rejected' | 'expired';
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: StyleGuide.colors.white},

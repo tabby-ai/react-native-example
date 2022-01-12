@@ -8,7 +8,6 @@ import {TabbyProduct, TabbyRN} from 'tabby-react-native-sdk';
 import {BrandLogo, ClosingCross, Spinner} from '../../base-components/Icons';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
 import {ROUTES, StyleGuide} from '../../constants';
-import {tabbyApiKey} from '../../constants/api';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 import {notify} from '../../utils/notifier';
 
@@ -75,11 +74,8 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
   React.useEffect(() => {
     const createSession = async () => {
       try {
-        const tabbyRn = new TabbyRN();
-        tabbyRn.setApiKey(tabbyApiKey);
-        const {sessionId: id, availableProducts} = await tabbyRn.createSession(
-          payload,
-        );
+        const {sessionId: id, availableProducts} =
+          await TabbyRN.getInstance().createSession(payload);
         setSessionId(id);
         setProducts(availableProducts);
       } catch (error) {

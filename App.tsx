@@ -4,6 +4,10 @@ import FlashMessage from 'react-native-flash-message';
 import {NavigationContainer} from '@react-navigation/native';
 import {App as Application} from './src/index';
 import {StyleGuide} from './src/constants';
+import {TabbyRN} from 'tabby-react-native-sdk';
+import {tabbyApiKey} from './src/constants/api';
+
+TabbyRN.getInstance().setApiKey(tabbyApiKey);
 
 const styles = StyleSheet.create({
   container: {flex: 1},
