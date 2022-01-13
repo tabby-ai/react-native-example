@@ -97,7 +97,8 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
       acc: {[key in TabbyPurchaseType]: TabbyProduct},
       product: TabbyProduct,
     ) => {
-      return {...acc, [product.type]: product};
+      const type = product.type;
+      return {...acc, [type]: product};
     },
     {} as {[key in TabbyPurchaseType]: TabbyProduct},
   );
