@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TabbyProduct, TabbyRN} from 'tabby-react-native-sdk';
+import {TabbyProduct, Tabby} from 'tabby-react-native-sdk';
 import {BrandLogo, ClosingCross, Spinner} from '../../base-components/Icons';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
 import {ROUTES, StyleGuide} from '../../constants';
@@ -74,8 +74,9 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
   React.useEffect(() => {
     const createSession = async () => {
       try {
-        const {sessionId: id, availableProducts} =
-          await TabbyRN.getInstance().createSession(payload);
+        const {sessionId: id, availableProducts} = await Tabby.createSession(
+          payload,
+        );
         setSessionId(id);
         setProducts(availableProducts);
       } catch (error) {
