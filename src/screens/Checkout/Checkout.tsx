@@ -4,7 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TabbyProduct, Tabby} from 'tabby-react-native-sdk';
+import {TabbyProduct, Tabby, TabbyPurchaseType} from 'tabby-react-native-sdk';
 import {BrandLogo, ClosingCross, Spinner} from '../../base-components/Icons';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
 import {ROUTES, StyleGuide} from '../../constants';
@@ -92,13 +92,19 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
     createSession();
   }, [navigation, payload]);
 
-  const withPaylater = products.find((product) => product.type === 'pay_later');
-  const withInstallments = products.find(
-    (product) => product.type === 'installments',
+  const availableProducts = products.reduce(
+    (
+      acc: {[key in TabbyPurchaseType]: TabbyProduct},
+      product: TabbyProduct,
+    ) => {
+      return {...acc, [product.type]: product};
+    },
+    {} as {[key in TabbyPurchaseType]: TabbyProduct},
   );
-  const withMonthlyBilling = products.find(
-    (product) => product.type === 'monthly_billing',
-  );
+
+  const withPaylater = availableProducts.pay_later;
+  const withInstallments = availableProducts.installments;
+  const withMonthlyBilling = availableProducts.monthly_billing;
 
   const handlePayLaterPress = async () => {
     if (withPaylater) {
