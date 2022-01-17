@@ -4,11 +4,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {TabbyProduct, Tabby, TabbyPurchaseType} from 'tabby-react-native-sdk';
 import {BrandLogo, ClosingCross, Spinner} from '../../base-components/Icons';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
-import {ROUTES, StyleGuide, TabbyPurchaseType} from '../../constants';
-import {tabbyApiHost, tabbyApiKey} from '../../constants/api';
-import {CheckoutSession} from '../../constants/payment';
+import {ROUTES, StyleGuide} from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 import {notify} from '../../utils/notifier';
 
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
 const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
   const {top, bottom: paddingBottom} = useSafeAreaInsets();
   const [sessionId, setSessionId] = React.useState<string>('');
-  const [products, setProducts] = React.useState<TabbyPurchaseType[]>([]);
+  const [products, setProducts] = React.useState<TabbyProduct[]>([]);
 
   const {payload} = route.params;
 
@@ -73,68 +72,63 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
   };
 
   React.useEffect(() => {
-    const createSession = () => {
-      fetch(`${tabbyApiHost}/checkout`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${tabbyApiKey}`,
-        },
-        body: JSON.stringify(payload),
-      })
-        .then((resp) => {
-          if (resp.ok) {
-            return resp.json().then((data) => {
-              const {
-                id,
-                configuration: {available_products},
-              } = data as CheckoutSession;
-              setSessionId(id);
-              const availableProducts: TabbyPurchaseType[] = [];
-              if (available_products.installments) {
-                availableProducts.push('installments');
-              }
-              if (available_products.pay_later) {
-                availableProducts.push('pay_later');
-              }
-              setProducts(availableProducts);
-            });
-          } else {
-            navigation.goBack();
-            notify({
-              message: '⛔️ Error creating session',
-              floating: true,
-            });
-          }
-        })
-        .catch(() => {
-          navigation.goBack();
-          notify({
-            message: '⛔️ Error creating session',
+    const createSession = async () => {
+      try {
+        const {sessionId: id, availableProducts} = await Tabby.createSession(
+          payload,
+        );
+        setSessionId(id);
+        setProducts(availableProducts);
+      } catch (error) {
+        navigation.goBack();
+        notify({
+          message: '⛔️ Error creating session',
 
-            floating: true,
-          });
+          floating: true,
         });
+      }
     };
 
     createSession();
   }, [navigation, payload]);
 
+  const availableProducts = products.reduce(
+    (
+      acc: {[key in TabbyPurchaseType]: TabbyProduct},
+      product: TabbyProduct,
+    ) => {
+      const type = product.type;
+      return {...acc, [type]: product};
+    },
+    {} as {[key in TabbyPurchaseType]: TabbyProduct},
+  );
+
+  const withPaylater = availableProducts.pay_later;
+  const withInstallments = availableProducts.installments;
+  const withMonthlyBilling = availableProducts.monthly_billing;
+
   const handlePayLaterPress = async () => {
-    navigation.navigate(ROUTES.Payment, {
-      type: 'pay_later',
-      sessionId,
-      merchantCode: payload.merchant_code,
-    });
+    if (withPaylater) {
+      navigation.navigate(ROUTES.Payment, {
+        url: withPaylater.webUrl,
+      });
+    }
   };
 
   const handleInstallmentsPress = async () => {
-    navigation.navigate(ROUTES.Payment, {
-      type: 'installments',
-      sessionId,
-      merchantCode: payload.merchant_code,
-    });
+    if (withInstallments) {
+      navigation.navigate(ROUTES.Payment, {
+        url: withInstallments.webUrl,
+      });
+    }
+  };
+
+  const handleMonthlyBillingPress = async () => {
+    if (withMonthlyBilling) {
+      navigation.navigate(ROUTES.Payment, {
+        url: withMonthlyBilling.webUrl,
+      });
+    }
   };
 
   if (!sessionId) {
@@ -152,9 +146,6 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
       </View>
     );
   }
-
-  const withPaylater = products.includes('pay_later');
-  const withInstallments = products.includes('installments');
 
   return (
     <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
@@ -206,6 +197,23 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
                 !withInstallments ? styles.withOpacity : undefined,
               ]}>
               Pay in installments
+            </Text>
+            <Spinner size={24} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleMonthlyBillingPress}
+            style={[
+              styles.button,
+              !withMonthlyBilling ? styles.buttonDisabled : undefined,
+            ]}
+            disabled={!withMonthlyBilling}>
+            <Text
+              style={[
+                styles.buttonText,
+                !withMonthlyBilling ? styles.withOpacity : undefined,
+              ]}>
+              Monthly Billing
             </Text>
             <Spinner size={24} />
           </TouchableOpacity>

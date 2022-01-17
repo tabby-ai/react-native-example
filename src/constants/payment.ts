@@ -26,16 +26,6 @@ export interface TabbyCheckoutPayload {
   payment: Payment;
 }
 
-export interface CheckoutSession {
-  id: string;
-  configuration: {
-    available_products: {
-      installments?: unknown;
-      pay_later?: unknown;
-    };
-  };
-}
-
 // https://docs.tabby.ai/#operation/postCheckoutSession
 const mockPayment: {payment: Payment} = {
   payment: {
