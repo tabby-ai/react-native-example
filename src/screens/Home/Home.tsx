@@ -102,8 +102,12 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
             <Text style={styles.title}> Limit snippets</Text>
-            <TabbyLimitSnippet lang="en" containerStyle={styles.withMargin} />
-            <TabbyLimitSnippet lang="ar" />
+            <TabbyLimitSnippet
+              price="6000"
+              lang="en"
+              containerStyle={styles.withMargin}
+            />
+            <TabbyLimitSnippet price="6000" lang="ar" />
           </View>
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
