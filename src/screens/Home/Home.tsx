@@ -14,6 +14,7 @@ import {
   TabbyLimitSnippet,
   TabbyCheckoutSnippet,
   TabbyProductPageSnippet,
+  TabbySplititSnippet,
 } from 'tabby-react-native-sdk';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
 import {
@@ -101,9 +102,35 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
+            <Text style={styles.title}> Split it snippet</Text>
+            <TabbySplititSnippet
+              currency="SAR"
+              price="6000"
+              lang="en"
+              containerStyle={styles.withMargin}
+            />
+            <TabbySplititSnippet
+              withCurrencyInArabic
+              currency="SAR"
+              price="6000"
+              lang="ar"
+            />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.exampleBox}>
             <Text style={styles.title}> Limit snippets</Text>
-            <TabbyLimitSnippet lang="en" containerStyle={styles.withMargin} />
-            <TabbyLimitSnippet lang="ar" />
+            <TabbyLimitSnippet
+              currency="SAR"
+              price="6000"
+              lang="en"
+              containerStyle={styles.withMargin}
+            />
+            <TabbyLimitSnippet
+              withCurrencyInArabic
+              currency="SAR"
+              price="6000"
+              lang="ar"
+            />
           </View>
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
