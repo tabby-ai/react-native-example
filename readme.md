@@ -14,6 +14,52 @@ Use [our SDK](https://www.npmjs.com/package/tabby-react-native-sdk) to integrate
 
 ## Snippets usage
 
+### TabbySplititSnippet
+
+```typescript jsx
+import React from "react";
+import { TabbySplititSnippet } from "tabby-react-native-sdk";
+
+<TabbySplititSnippet
+  currency="SAR"
+  price="5000.00"
+  lang="en"
+  containerStyle={{
+    flex: 1
+    // ...your other ViewStyle
+  }}
+  currencyTextStyle={{
+    // ...your other TextStyle
+  }}
+  priceTextStyle={{
+    // ...your other TextStyle
+  }}
+  textStyle={{
+    // ...your other TextStyle
+  }}
+  splititTitleTextStyle={{
+    // ...your other TextStyle
+  }}
+  learnMoreTextStyle={{
+    // ...your other TextStyle
+  }}
+  url={
+    // Your promo wiget url
+  }
+  withCurrencyInArabic={
+    // Optional props. Set true if you need to display currency in Arabic.
+  }
+  arrowFill={
+    // "#3835AF"
+  }
+/>
+```
+
+## Result
+
+![Snippet EN](./docs/TabbySplititSnippet_EN.gif)
+![Snippet AR](./docs/TabbySplititSnippet_AR.gif)
+
 ### TabbyLimitSnippet
 
 ```typescript jsx
@@ -44,6 +90,9 @@ import { TabbyLimitSnippet } from "tabby-react-native-sdk";
   }}
   url={
     // Your promo wiget url
+  }
+  withCurrencyInArabic={
+    // Optional props. Set true if you need to display currency in Arabic.
   }
 />
 ```
@@ -85,6 +134,9 @@ import { TabbyCheckoutSnippet } from "tabby-react-native-sdk";
     shadowColor: '#000000',
     // ...your other ViewStyle
   }}
+  withCurrencyInArabic={
+    // Optional props. Set true if you need to display currency in Arabic.
+  }
     />
 ```
 
@@ -126,6 +178,9 @@ import { TabbyProductPageSnippet } from "tabby-react-native-sdk";
   }}
   url={
     // Your promo wiget url
+  }
+  withCurrencyInArabic={
+    // Optional props. Set true if you need to display currency in Arabic.
   }
 />
 ```
