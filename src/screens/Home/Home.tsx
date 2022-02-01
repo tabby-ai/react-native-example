@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  I18nManager,
 } from 'react-native';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,6 +15,8 @@ import {
   TabbyLimitSnippet,
   TabbyCheckoutSnippet,
   TabbyProductPageSnippet,
+  TabbySplititSnippet,
+  TabbyProductSnippetCreditCard,
 } from 'tabby-react-native-sdk';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
 import {
@@ -23,6 +26,8 @@ import {
   mockPayment,
 } from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
+
+I18nManager.forceRTL(false);
 
 type HomeScreenNavigationProp = StackNavigationProp<
   HomeStackParamsList,
@@ -101,13 +106,50 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
-            <Text style={styles.title}>Limit snippets</Text>
-            <TabbyLimitSnippet
+            <Text style={styles.title}> Split it snippet</Text>
+            <TabbySplititSnippet
+              currency="SAR"
+              price="6000"
               lang="en"
               containerStyle={styles.withMargin}
+            />
+            <TabbySplititSnippet
+              withCurrencyInArabic
+              currency="SAR"
+              price="6000"
+              lang="ar"
+            />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.exampleBox}>
+            <Text style={styles.title}>Product page snippets credit card</Text>
+            <TabbyProductSnippetCreditCard
+              lang="en"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              containerStyle={styles.withMargin}
+            />
+            <TabbyProductSnippetCreditCard
+              lang="ar"
+              currency="AED"
               price={mockPayment.payment.amount}
             />
-            <TabbyLimitSnippet lang="ar" price={mockPayment.payment.amount} />
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.exampleBox}>
+            <Text style={styles.title}> Limit snippets</Text>
+            <TabbyLimitSnippet
+              currency="SAR"
+              price="6000"
+              lang="en"
+              containerStyle={styles.withMargin}
+            />
+            <TabbyLimitSnippet
+              withCurrencyInArabic
+              currency="SAR"
+              price="6000"
+              lang="ar"
+            />
           </View>
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
