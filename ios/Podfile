@@ -1,7 +1,28 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '10.0'
+platform :ios, '13.0'
+
+# Mac M1 utility func from source
+# https://github.com/facebook/react-native/blob/23717c6381a41b1c5f189376bfa5bc73c7a4da87/scripts/react_native_pods.rb#L182
+def exclude_architectures(installer)
+  projects = installer.aggregate_targets
+    .map{ |t| t.user_project }
+    .uniq{ |p| p.path }
+    .push(installer.pods_project)
+
+  arm_value = `/usr/sbin/sysctl -n hw.optional.arm64 2>&1`.to_i
+
+  # Hermes does not support `i386` architecture
+  excluded_archs_default = has_pod(installer, 'hermes-engine') ? "i386" : ""
+
+  projects.each do |project|
+    project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 " + excluded_archs_default
+    end
+    project.save()
+  end
+end
 
 target 'RNTabbyDemo' do
   config = use_native_modules!
@@ -25,8 +46,6 @@ target 'RNTabbyDemo' do
 
   post_install do |installer|
     react_native_post_install(installer)
-    installer.pods_project.build_configurations.each do |config|
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-   end
+    exclude_architectures(installer)
   end
 end
