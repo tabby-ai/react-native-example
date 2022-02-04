@@ -6,7 +6,7 @@ import {Payment} from '../screens/Payment';
 import {ROUTES} from '../constants';
 import {SnippetWebView} from '../screens/SnippetWebView/SnippetWebView';
 import {Checkout} from '../screens/Checkout';
-import {TabbyCheckoutPayload} from '../constants/payment';
+import {TabbyCheckoutPayload} from 'tabby-react-native-sdk';
 
 export type HomeStackParamsList = {
   [ROUTES.Home]: undefined;
