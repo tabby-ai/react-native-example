@@ -15,8 +15,7 @@ import {
   TabbyLimitSnippet,
   TabbyCheckoutSnippet,
   TabbyProductPageSnippet,
-  TabbySplititSnippet,
-  TabbyProductSnippetCreditCard,
+  TabbyNonStandardProductPageSnippet,
 } from 'tabby-react-native-sdk';
 import {BrandLogo, Spinner} from '../../base-components/Icons';
 import {
@@ -106,34 +105,13 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
 
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
-            <Text style={styles.title}> Split it snippet</Text>
-            <TabbySplititSnippet
-              currency="SAR"
-              price="6000"
-              lang="en"
-              containerStyle={styles.withMargin}
-            />
-            <TabbySplititSnippet
-              withCurrencyInArabic
-              currency="SAR"
-              price="6000"
-              lang="ar"
-            />
-          </View>
-          <View style={styles.divider} />
-          <View style={styles.exampleBox}>
-            <Text style={styles.title}>Product page snippets credit card</Text>
-            <TabbyProductSnippetCreditCard
+            <Text style={styles.title}>Product page snippets non standard</Text>
+            <TabbyNonStandardProductPageSnippet
               lang="en"
               currency="AED"
-              price={mockPayment.payment.amount}
               containerStyle={styles.withMargin}
             />
-            <TabbyProductSnippetCreditCard
-              lang="ar"
-              currency="AED"
-              price={mockPayment.payment.amount}
-            />
+            <TabbyNonStandardProductPageSnippet lang="ar" currency="AED" />
           </View>
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
@@ -164,6 +142,23 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
               lang="ar"
               currency="AED"
               price={mockPayment.payment.amount}
+            />
+          </View>
+          <View style={styles.exampleBox}>
+            <Text style={styles.title}>Product page snippets Al Shaya</Text>
+            <TabbyProductPageSnippet
+              lang="en"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              containerStyle={styles.withMargin}
+              uiVariation="vendor-1"
+            />
+            <TabbyProductPageSnippet
+              lang="ar"
+              currency="AED"
+              price={mockPayment.payment.amount}
+              containerStyle={styles.withMargin}
+              uiVariation="vendor-1"
             />
           </View>
           <View style={styles.divider} />
