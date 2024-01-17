@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StatusBar, StyleSheet} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-import {NavigationContainer} from '@react-navigation/native';
 import {App as Application} from './src/index';
 import {StyleGuide} from './src/constants';
 import {Tabby} from 'tabby-react-native-sdk';
@@ -33,19 +32,17 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <View style={styles.container}>
-      <NavigationContainer>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={StyleGuide.colors.bg}
-        />
-        <Application />
-        <FlashMessage
-          textStyle={styles.flashMessageText}
-          titleStyle={styles.flashMessageText}
-          position="top"
-          style={styles.flashMessageContainer}
-        />
-      </NavigationContainer>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={StyleGuide.colors.bg}
+      />
+      <Application />
+      <FlashMessage
+        textStyle={styles.flashMessageText}
+        titleStyle={styles.flashMessageText}
+        position="top"
+        style={styles.flashMessageContainer}
+      />
     </View>
   );
 };

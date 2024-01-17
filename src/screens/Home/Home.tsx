@@ -7,7 +7,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  I18nManager,
 } from 'react-native';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -25,8 +24,6 @@ import {
   mockPayment,
 } from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
-
-I18nManager.forceRTL(false);
 
 type HomeScreenNavigationProp = StackNavigationProp<
   HomeStackParamsList,
@@ -144,23 +141,25 @@ const Home: React.FC<Props> = ({navigation}: Props) => {
               price={mockPayment.payment.amount}
             />
           </View>
-          <View style={styles.exampleBox}>
-            <Text style={styles.title}>Product page snippets Al Shaya</Text>
-            <TabbyProductPageSnippet
-              lang="en"
-              currency="AED"
-              price={mockPayment.payment.amount}
-              containerStyle={styles.withMargin}
-              uiVariation="vendor-1"
-            />
-            <TabbyProductPageSnippet
-              lang="ar"
-              currency="AED"
-              price={mockPayment.payment.amount}
-              containerStyle={styles.withMargin}
-              uiVariation="vendor-1"
-            />
-          </View>
+          {__DEV__ ? (
+            <View style={styles.exampleBox}>
+              <Text style={styles.title}>Product page snippets Al Shaya</Text>
+              <TabbyProductPageSnippet
+                lang="en"
+                currency="AED"
+                price={mockPayment.payment.amount}
+                containerStyle={styles.withMargin}
+                uiVariation="vendor-1"
+              />
+              <TabbyProductPageSnippet
+                lang="ar"
+                currency="AED"
+                price={mockPayment.payment.amount}
+                containerStyle={styles.withMargin}
+                uiVariation="vendor-1"
+              />
+            </View>
+          ) : null}
           <View style={styles.divider} />
           <View style={styles.exampleBox}>
             <Text style={styles.title}>Checkout snippets</Text>
