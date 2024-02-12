@@ -24,10 +24,15 @@ const mockPayment: {payment: Payment} = {
     amount: '340.00',
     currency: 'AED',
     buyer: {
-      email: 'successful.payment@tabby.ai',
+      email: 'card.success@tabby.ai',
       phone: '+971500000001',
       name: 'Yazan Khalid',
       dob: '2019-08-24',
+    },
+    shipping_address: {
+      city: 'Dubai',
+      address: '1',
+      zip: '1111111',
     },
     buyer_history: {
       registered_since: '2019-08-24T14:15:22Z',

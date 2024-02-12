@@ -103,30 +103,12 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
     {} as {[key in TabbyPurchaseType]: TabbyProduct},
   );
 
-  const withPaylater = availableProducts.pay_later;
   const withInstallments = availableProducts.installments;
-  const withMonthlyBilling = availableProducts.monthly_billing;
-
-  const handlePayLaterPress = async () => {
-    if (withPaylater) {
-      navigation.navigate(ROUTES.Payment, {
-        url: withPaylater.webUrl,
-      });
-    }
-  };
 
   const handleInstallmentsPress = async () => {
     if (withInstallments) {
       navigation.navigate(ROUTES.Payment, {
         url: withInstallments.webUrl,
-      });
-    }
-  };
-
-  const handleMonthlyBillingPress = async () => {
-    if (withMonthlyBilling) {
-      navigation.navigate(ROUTES.Payment, {
-        url: withMonthlyBilling.webUrl,
       });
     }
   };
@@ -168,23 +150,6 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
         <View style={styles.container} />
         <View style={[styles.exampleBox, styles.centered]}>
           <TouchableOpacity
-            onPress={handlePayLaterPress}
-            style={[
-              styles.button,
-              !withPaylater ? styles.buttonDisabled : undefined,
-            ]}
-            disabled={!withPaylater}>
-            <Text
-              style={[
-                styles.buttonText,
-                !withPaylater ? styles.withOpacity : undefined,
-              ]}>
-              Pay later
-            </Text>
-            <Spinner size={24} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
             onPress={handleInstallmentsPress}
             style={[
               styles.button,
@@ -197,23 +162,6 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
                 !withInstallments ? styles.withOpacity : undefined,
               ]}>
               Pay in installments
-            </Text>
-            <Spinner size={24} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleMonthlyBillingPress}
-            style={[
-              styles.button,
-              !withMonthlyBilling ? styles.buttonDisabled : undefined,
-            ]}
-            disabled={!withMonthlyBilling}>
-            <Text
-              style={[
-                styles.buttonText,
-                !withMonthlyBilling ? styles.withOpacity : undefined,
-              ]}>
-              Monthly Billing
             </Text>
             <Spinner size={24} />
           </TouchableOpacity>

@@ -33,7 +33,6 @@ const SnippetWebView = ({route, navigation}: Props) => {
     params: {lang},
   } = route;
 
-  const isRTL = lang === 'ar';
   const url = webViewUrls[lang];
 
   const back = () => {
@@ -63,7 +62,7 @@ const SnippetWebView = ({route, navigation}: Props) => {
             alignItems: 'center',
             backgroundColor: 'transparent',
           }}>
-          <TabbySpinner isRTL={isRTL} />
+          <TabbySpinner />
         </View>
       ) : null}
     </View>
