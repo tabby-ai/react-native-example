@@ -1,0 +1,17 @@
+default_platform(:android)
+
+desc "Distributes a new build"
+lane :distribute do |options|
+  android_artifact_path = ENV["ARTIFACT_PATH"]
+  app_id = ENV["FIREBASE_APP_ID_RN_SDK"]
+  firebase_cli_token = ENV["FIREBASE_CLI_TOKEN"]
+
+  puts("🚀 Uploading to Firebase App Distribution")
+  firebase_app_distribution(
+    app: app_id,
+    android_artifact_type: "APK",
+    android_artifact_path: android_artifact_path,
+    firebase_cli_token: firebase_cli_token,
+    groups: "sdk-testers",
+  )
+end

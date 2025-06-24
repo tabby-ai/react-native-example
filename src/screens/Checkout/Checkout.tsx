@@ -1,15 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TabbyProduct, Tabby, TabbyPurchaseType} from 'tabby-react-native-sdk';
-import {BrandLogo, ClosingCross, Spinner} from '../../base-components/Icons';
+import * as React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from 'react-native';
+import {
+  Currency,
+  TabbyProduct,
+  Tabby,
+  TabbyPurchaseType,
+} from 'tabby-react-native-sdk';
 import {TabbySpinner} from '../../base-components/TabbySpinner';
-import {ROUTES, StyleGuide} from '../../constants';
+import {
+  ROUTES,
+  StyleGuide,
+  getMockPaymentData,
+  mockPayment,
+} from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 import {notify} from '../../utils/notifier';
+import {currencies} from '../../constants/constants';
 
 type CheckoutScreenNavigationProp = StackNavigationProp<
   HomeStackParamsList,
@@ -26,22 +42,33 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     padding: 12,
-    backgroundColor: StyleGuide.colors.brand,
+    backgroundColor: StyleGuide.colors.black,
     marginVertical: 12,
+  },
+  selectButton: {
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: StyleGuide.colors.disabled,
+    borderRadius: 12,
+    padding: 12,
+    marginVertical: 8,
   },
   buttonDisabled: {
     backgroundColor: StyleGuide.colors.disabled,
   },
   buttonText: {
-    marginRight: 8,
+    color: StyleGuide.colors.white,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   paymentInfoContainer: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    borderRadius: 12,
     padding: 12,
-    marginBottom: 32,
   },
   container: {flex: 1},
   centered: {justifyContent: 'center', alignItems: 'center'},
@@ -56,41 +83,126 @@ const styles = StyleSheet.create({
   withMargin: {marginBottom: 24},
 });
 
-const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
-  const {top, bottom: paddingBottom} = useSafeAreaInsets();
-  const [sessionId, setSessionId] = React.useState<string>('');
-  const [products, setProducts] = React.useState<TabbyProduct[]>([]);
+const InputSessionData = ({
+  onSessionCreated,
+}: {
+  onSessionCreated: (arg: {
+    sessionId: string;
+    availableProducts: TabbyProduct[];
+  }) => void;
+}) => {
+  const [amount, setAmount] = React.useState<string>('500');
+  const [currency, setCurrency] = React.useState<Currency>('AED');
+  const [email, setEmail] = React.useState<string>(
+    mockPayment.payment.buyer.email,
+  );
+  const [phone, setPhone] = React.useState<string>(
+    mockPayment.payment.buyer.phone,
+  );
+  const [merchantCode, setMerchantCode] = React.useState<string>('ae');
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const {payload} = route.params;
-
-  const handleCancel = () => {
-    navigation.goBack();
-    notify({
-      message: '⛔️ You cancelled checkout process',
-      floating: true,
-    });
+  const createSession = async () => {
+    try {
+      setLoading(true);
+      const payment = getMockPaymentData({amount, currency, email, phone});
+      console.log(payment);
+      const {sessionId, availableProducts} = await Tabby.createSession({
+        merchant_code: merchantCode,
+        lang: 'en',
+        ...payment,
+      });
+      console.log({sessionId, availableProducts});
+      onSessionCreated({sessionId, availableProducts});
+    } catch (error) {
+      console.log(error);
+      notify({
+        message: '⛔️ Error creating session',
+        floating: true,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  React.useEffect(() => {
-    const createSession = async () => {
-      try {
-        const {sessionId: id, availableProducts} = await Tabby.createSession(
-          payload,
-        );
-        setSessionId(id);
-        setProducts(availableProducts);
-      } catch (error) {
-        navigation.goBack();
-        notify({
-          message: '⛔️ Error creating session',
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.centered]}>
+        <TabbySpinner />
+      </View>
+    );
+  }
 
-          floating: true,
-        });
-      }
-    };
+  const isReadyToCreateSession =
+    !!amount && !!email && !!phone && !!merchantCode;
 
-    createSession();
-  }, [navigation, payload]);
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.paymentInfoContainer}>
+        <Text>Amount</Text>
+        <TextInput
+          value={amount}
+          onChangeText={setAmount}
+          style={styles.input}
+          placeholder="Amount"
+          keyboardType="number-pad"
+        />
+        <Text>Currency</Text>
+        <View style={[styles.row, {flexWrap: 'wrap'}]}>
+          {currencies.map(c => (
+            <TouchableOpacity
+              key={c}
+              onPress={() => setCurrency(c)}
+              style={[
+                styles.button,
+                styles.selectButton,
+                currency === c ? undefined : styles.buttonDisabled,
+              ]}>
+              <Text style={styles.buttonText}>{c}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <Text>Email</Text>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          style={styles.input}
+          placeholder="Email"
+          keyboardType="email-address"
+        />
+        <Text>Phone</Text>
+        <TextInput
+          value={phone}
+          onChangeText={setPhone}
+          style={styles.input}
+          placeholder="Phone"
+          keyboardType="phone-pad"
+        />
+        <Text>Merchant Code</Text>
+        <TextInput
+          value={merchantCode}
+          onChangeText={setMerchantCode}
+          style={styles.input}
+          autoCapitalize="none"
+          placeholder="Merchant code"
+        />
+        <TouchableOpacity
+          disabled={!isReadyToCreateSession}
+          onPress={createSession}
+          style={[
+            styles.button,
+            !isReadyToCreateSession ? styles.buttonDisabled : undefined,
+          ]}>
+          <Text style={styles.buttonText}>Create session</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+};
+
+const Checkout = ({navigation}: Props) => {
+  const [sessionId, setSessionId] = React.useState<string>('');
+  const [products, setProducts] = React.useState<TabbyProduct[]>([]);
 
   const availableProducts = products.reduce(
     (
@@ -115,58 +227,34 @@ const Checkout: React.FC<Props> = ({navigation, route}: Props) => {
 
   if (!sessionId) {
     return (
-      <View
-        style={[
-          styles.container,
-          styles.centered,
-          {
-            paddingTop: top || 12,
-            paddingBottom,
-          },
-        ]}>
-        <TabbySpinner />
+      <View style={styles.container}>
+        <InputSessionData
+          onSessionCreated={data => {
+            setSessionId(data.sessionId);
+            setProducts(data.availableProducts);
+          }}
+        />
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, {paddingTop: top || 12, paddingBottom}]}>
-      <View
+    <View style={[styles.container, styles.centered]}>
+      <TouchableOpacity
+        onPress={handleInstallmentsPress}
         style={[
-          styles.row,
-          styles.centered,
-          {
-            paddingHorizontal: 12,
-          },
-        ]}>
-        <View style={{alignItems: 'center', flex: 1, paddingLeft: 32}}>
-          <BrandLogo size={50} />
-        </View>
-        <TouchableOpacity onPress={handleCancel}>
-          <ClosingCross fill="rgba(41, 41, 41, 0.5)" size={32} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.container} />
-        <View style={[styles.exampleBox, styles.centered]}>
-          <TouchableOpacity
-            onPress={handleInstallmentsPress}
-            style={[
-              styles.button,
-              !withInstallments ? styles.buttonDisabled : undefined,
-            ]}
-            disabled={!withInstallments}>
-            <Text
-              style={[
-                styles.buttonText,
-                !withInstallments ? styles.withOpacity : undefined,
-              ]}>
-              Pay in installments
-            </Text>
-            <Spinner size={24} />
-          </TouchableOpacity>
-        </View>
-      </View>
+          styles.button,
+          !withInstallments ? styles.buttonDisabled : undefined,
+        ]}
+        disabled={!withInstallments}>
+        <Text
+          style={[
+            styles.buttonText,
+            !withInstallments ? styles.withOpacity : undefined,
+          ]}>
+          Open webview
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

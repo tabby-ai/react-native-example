@@ -1,12 +1,9 @@
 import React from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {View, StatusBar, StyleSheet} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
 import {App as Application} from './src/index';
 import {StyleGuide} from './src/constants';
-import {Tabby} from 'tabby-react-native-sdk';
-import {tabbyApiKey} from './src/constants/api';
-
-Tabby.setApiKey(tabbyApiKey);
 
 const styles = StyleSheet.create({
   container: {flex: 1},
@@ -31,19 +28,21 @@ const styles = StyleSheet.create({
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={StyleGuide.colors.bg}
-      />
-      <Application />
-      <FlashMessage
-        textStyle={styles.flashMessageText}
-        titleStyle={styles.flashMessageText}
-        position="top"
-        style={styles.flashMessageContainer}
-      />
-    </View>
+    <GestureHandlerRootView>
+      <View style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={StyleGuide.colors.bg}
+        />
+        <Application />
+        <FlashMessage
+          textStyle={styles.flashMessageText}
+          titleStyle={styles.flashMessageText}
+          position="top"
+          style={styles.flashMessageContainer}
+        />
+      </View>
+    </GestureHandlerRootView>
   );
 };
 

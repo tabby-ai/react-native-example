@@ -1,9 +1,9 @@
+import * as React from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TabbyPaymentWebView} from 'tabby-react-native-sdk';
+import {TabbyPaymentWebView, WebViewResult} from 'tabby-react-native-sdk';
 import {ROUTES, StyleGuide} from '../../constants';
 import {HomeStackParamsList} from '../../navigator/HomeStack';
 import {notify} from '../../utils/notifier';
@@ -17,8 +17,6 @@ interface Props {
   navigation: PaymentScreenNavigationProp;
   route: RouteProp<HomeStackParamsList, ROUTES.Payment>;
 }
-
-type WebViewResult = 'close' | 'authorized' | 'rejected' | 'expired';
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: StyleGuide.colors.white},
@@ -34,6 +32,21 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   const back = () => {
     navigation.navigate(ROUTES.Home);
   };
+
+  React.useEffect(() => {
+    const requestPermissions = async () => {
+      // try {
+      //   await request(
+      //     Platform.OS === 'ios'
+      //       ? PERMISSIONS.IOS.CAMERA
+      //       : PERMISSIONS.ANDROID.CAMERA,
+      //   );
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    };
+    requestPermissions();
+  }, []);
 
   const handleCancel = () => {
     navigation.goBack();
@@ -52,12 +65,12 @@ const Payment: React.FC<Props> = ({navigation, route}: Props) => {
   };
 
   const parseMessage = (msg: WebViewResult) => {
-    console.log({msg});
-    if (msg === 'close' || msg === 'rejected') {
-      handleCancel();
-    }
+    console.log(`Tabby Payment WebView result: ${msg.toUpperCase()}`);
     if (msg === 'authorized') {
       handleSuccess();
+    } else {
+      // msg === 'close' || msg === 'rejected' || msg === 'expired'
+      handleCancel();
     }
   };
 

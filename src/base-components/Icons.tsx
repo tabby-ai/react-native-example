@@ -10,7 +10,7 @@ interface Props {
 }
 const defaultFill = StyleGuide.colors.black;
 
-const BrandLogo: React.FC<Props> = ({size, fill = defaultFill}: Props) => {
+const BrandLogo = ({size, fill = defaultFill}: Props) => {
   const RATIO = 120 / 40;
   return (
     <Svg width={size} height={size / RATIO} viewBox="0 0 120 40" fill="none">
@@ -26,7 +26,7 @@ const BrandLogo: React.FC<Props> = ({size, fill = defaultFill}: Props) => {
   );
 };
 
-const ClosingCross: React.FC<Props> = ({size}: Props) => {
+const ClosingCross = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 30 30" fill="none">
       <Circle cx={15} cy={15} r={15} fill="#000" />
@@ -40,7 +40,7 @@ const ClosingCross: React.FC<Props> = ({size}: Props) => {
   );
 };
 
-const Spinner: React.FC<Props> = ({size}: Props) => {
+const Spinner = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 35 35" fill="none">
       <Path
@@ -72,7 +72,7 @@ const SnippetLogo: React.FC = () => {
   );
 };
 
-const Round1: React.FC<Props> = ({size}: Props) => {
+const Round1 = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
       <Circle
@@ -88,7 +88,7 @@ const Round1: React.FC<Props> = ({size}: Props) => {
   );
 };
 
-const Round2: React.FC<Props> = ({size}: Props) => {
+const Round2 = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
       <Circle
@@ -107,7 +107,7 @@ const Round2: React.FC<Props> = ({size}: Props) => {
   );
 };
 
-const Round3: React.FC<Props> = ({size}: Props) => {
+const Round3 = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
       <Circle
@@ -126,7 +126,7 @@ const Round3: React.FC<Props> = ({size}: Props) => {
   );
 };
 
-const Round4: React.FC<Props> = ({size}: Props) => {
+const Round4 = ({size}: Props) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 26 26" fill="none">
       <Circle

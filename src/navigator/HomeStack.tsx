@@ -1,20 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import {TransitionPresets, createStackNavigator} from '@react-navigation/stack';
 
 import {Home} from '../screens/Home';
 import {Payment} from '../screens/Payment';
 import {ROUTES} from '../constants';
-import {SnippetWebView} from '../screens/SnippetWebView/SnippetWebView';
 import {Checkout} from '../screens/Checkout';
-import {TabbyCheckoutPayload} from 'tabby-react-native-sdk';
 
 export type HomeStackParamsList = {
   [ROUTES.Home]: undefined;
-  [ROUTES.Checkout]: {payload: TabbyCheckoutPayload};
-  [ROUTES.Payment]: {
-    url: string;
-  };
-  [ROUTES.SnippetWebView]: {lang: 'en' | 'ar'};
+  [ROUTES.Checkout]: undefined;
+  [ROUTES.Payment]: {url: string};
 };
 
 const HomeStack = createStackNavigator<HomeStackParamsList>();
@@ -46,17 +41,9 @@ function HomeStackScreen() {
         name={ROUTES.Checkout}
         component={Checkout}
         options={{
-          headerShown: false,
+          // headerShown: false,
           gestureEnabled: false,
           ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <HomeStack.Screen
-        name={ROUTES.SnippetWebView}
-        component={SnippetWebView}
-        options={{
-          headerShown: false,
-          ...TransitionPresets.ModalSlideFromBottomIOS,
         }}
       />
     </HomeStack.Navigator>
